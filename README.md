@@ -22,7 +22,7 @@ To solve this, a custom cloud file manager like [Cloud File CLI (heichel/cloudfi
 
 - macOS (includes `brctl`)
 - [BorgBackup](https://www.borgbackup.org/)
-- Set up a Borg repository (see [docs](https://borgbackup.readthedocs.io/en/1.4-maint/usage/init.html))
+- Set up a Borg repository (see [docs](https://borgbackup.readthedocs.io/en/1.4-maint/usage/init.html)). A great option for affordable backup storage compatible with Borg is a Storage Box from [Hetzner](https://hetzner.cloud/?ref=ikQf2yXpAaDp)*
 - [1Password CLI (`op`)](https://developer.1password.com/docs/cli/)
 - Add item with the Borg repository password to your 1Password vault
 - Standard tools: `find`, `sh`
