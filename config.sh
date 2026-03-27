@@ -21,6 +21,14 @@ if [ -z "${ICLOUD_DRIVE_ROOT:-}" ]; then
     ICLOUD_DRIVE_ROOT="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
 fi
 
+if [ -z "${DOWNLOAD_COMMAND:-}" ]; then
+    DOWNLOAD_COMMAND="brctl download"
+fi
+
+if [ -z "${EVICT_COMMAND:-}" ]; then
+    EVICT_COMMAND="brctl evict"
+fi
+
 # Secrets
 # ---------------------------------------------------------------
 

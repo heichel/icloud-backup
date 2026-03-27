@@ -4,10 +4,14 @@
 
 set -eu
 
+download_command_bin="${DOWNLOAD_COMMAND%% *}"
+evict_command_bin="${EVICT_COMMAND%% *}"
+
 require_command op
 require_command borg
-require_command brctl
 require_command find
+require_command "$download_command_bin"
+require_command "$evict_command_bin"
 
 printInfo "Starting iCloud Drive Backup"
 
@@ -24,7 +28,11 @@ archive_name=$(date '+%Y-%m-%dT%H-%M-%S')
 download_target() {
 	target_path="$1"
 	printInfo "Downloading $target_path"
-	brctl download "$target_path"
+	find "$target_path" -type f -exec sh -c '
+		command_template="$1"
+		file_path="$2"
+		eval "$command_template \"\$file_path\""
+	' sh "$DOWNLOAD_COMMAND" '{}' ';'
 }
 
 backup_target() {
@@ -38,7 +46,11 @@ backup_target() {
 evict_target() {
 	target_path="$1"
 	printInfo "Evicting local downloads for $target_path"
-	find "$target_path" -type f -exec brctl evict '{}' ';'
+	find "$target_path" -type f -exec sh -c '
+		command_template="$1"
+		file_path="$2"
+		eval "$command_template \"\$file_path\""
+	' sh "$EVICT_COMMAND" '{}' ';'
 }
 
 printf '%s\n' "$ICLOUD_BACKUP_DIRS" | while IFS= read -r folder_name || [ -n "$folder_name" ]; do
