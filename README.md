@@ -1,8 +1,8 @@
-# iCloud Backup Scripts
+# iCloud Backup Script
 
-Small POSIX shell scripts to back up selected iCloud Drive folders with Borg on macOS.
+Small POSIX shell script to back up selected iCloud Drive folders with Borg on macOS.
 
-## What it does
+## How it works
 
 For each folder listed in `ICLOUD_BACKUP_DIRS`, the backup script is designed to:
 
@@ -38,6 +38,8 @@ Required variables:
 - `BORG_REPO`: Borg repository URL/path
 - `OP_REFERENCE_PASSWORD`: 1Password secret reference to the Borg passphrase
 - `ICLOUD_BACKUP_DIRS`: newline-delimited list of folder paths inside iCloud Drive
+
+**Note**: While you could just set `ICLOUD_BACKUP_DIRS='.'` to backup the whole iCloud Drive at once, this would download every file at once and thus require you to have enough storage available on your Mac. Instead, provide individual folder names / paths so that the backup is done in chunks. The script will only download the current chunk and free up the space after backing it up. Choose the size of these chunks depending on your available disk space.
 
 Optional variables:
 
